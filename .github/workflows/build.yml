@@ -16,10 +16,7 @@ jobs:
     - name: Unzip and Move Files
       run: |
         unzip -o *.zip
-        GRADLE_DIR=$(dirname $(find . -name "gradlew" -type f | head -n 1))
-        if [ "$GRADLE_DIR" != "." ]; then
-          cp -r $GRADLE_DIR/* .
-        fi
+        cp -r BubbleBlastBangla/* . 2>/dev/null || true
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
