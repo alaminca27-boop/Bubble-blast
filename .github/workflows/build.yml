@@ -13,19 +13,19 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Unzip Project Files
+    - name: Unzip and Move Files
       run: |
         unzip -o *.zip
-        cp -rn BubbleBlastBangla/* . 2>/dev/null || true
+        GRADLE_DIR=$(dirname $(find . -name "gradlew" -type f | head -n 1))
+        if [ "$GRADLE_DIR" != "." ]; then
+          cp -r $GRADLE_DIR/* .
+        fi
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
 
     - name: Make Gradlew Executable
       run: chmod +x gradlew
